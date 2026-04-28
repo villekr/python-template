@@ -1,0 +1,48 @@
+[project]
+name = "python-template"
+version = "0.1.0"
+description = "Python project template with modern defaults: uv, ruff, pytest, pre-commit, GitHub Actions"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0.0",
+    "ruff>=0.13.0",
+    "pre-commit>=4.0.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/python_template"]
+
+[tool.ruff]
+line-length = 120
+fix = true
+src = ["src"]
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle errors
+    "F",    # pyflakes
+    "I",    # isort
+    "W",    # pycodestyle warnings
+    "C90",  # mccabe complexity
+    "PLC0415",  # import outside toplevel
+    "PLR0912",  # too many branches
+    "PLR0915",  # too many statements
+]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10
+
+[tool.ruff.lint.pylint]
+max-branches = 12
+max-statements = 50
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
