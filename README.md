@@ -1,6 +1,8 @@
 # python-template
 
-Python project template with modern defaults: uv, ruff, pytest, pre-commit, GitHub Actions.
+[![PR Checks](https://github.com/villekr/python-template/actions/workflows/pr.yml/badge.svg)](https://github.com/villekr/python-template/actions/workflows/pr.yml)
+
+Python project template with modern defaults: uv, ruff, ty, pytest, pip-audit, gitleaks, zizmor, pre-commit, GitHub Actions.
 
 ## Getting Started
 
@@ -15,32 +17,42 @@ Python project template with modern defaults: uv, ruff, pytest, pre-commit, GitH
 4. Install dependencies and activate pre-commit hooks:
 
 ```bash
-uv sync
+uv sync --group dev
 uv run pre-commit install
 ```
 
 ## Commands
 
 ```bash
-uv run pytest              # Run tests
+uv run pytest              # Run tests (with coverage; 100% gate)
 uv run ruff format --check # Check formatting without changes
 uv run ruff format         # Format code
-uv run ruff check          # Lint
+uv run ruff check          # Lint (incl. bandit security rules)
+uv run ty check            # Type check
+uv run pip-audit           # Audit dependencies for known vulnerabilities
 ```
 
 ## Tools
 
 - **uv** — Project and dependency management
-- **ruff** — Linting and formatting
-- **pytest** — Testing
-- **pre-commit** — Git hooks (format check, lint, tests)
-- **GitHub Actions** — PR checks (same as pre-commit)
+- **ruff** — Linting (incl. bandit security rules) and formatting
+- **ty** — Type checking
+- **pytest** — Testing (with coverage via pytest-cov; 100% gate)
+- **pip-audit** — Dependency vulnerability auditing
+- **gitleaks** — Secret scanning
+- **zizmor** — GitHub Actions workflow security auditing
+- **pre-commit** — Git hooks (format, lint, type check, secret scan, workflow audit, dependency audit, tests)
+- **GitHub Actions** — PR checks (same as pre-commit) with least-privilege permissions
 
 ## Project Structure
 
 ```
 src/python_template/   # Package source
 tests/                 # Tests
-.github/workflows/     # CI
-.kiro/steering/        # Kiro AI steering files
+.github/workflows/     # CI (parallel lint / type-check / test / audit / secrets / workflow jobs)
+.github/dependabot.yml # Weekly dependency + action updates
+.github/zizmor.yml     # zizmor (GitHub Actions audit) config
+.github/ISSUE_TEMPLATE/ # Bug report + feature request forms
+CONTRIBUTING.md        # Contributor guide
+AGENTS.md              # Instructions for AI coding agents (CLAUDE.md, GEMINI.md, .cursorrules symlink to it)
 ```

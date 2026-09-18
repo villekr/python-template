@@ -1,16 +1,19 @@
 [project]
 name = "python-template"
 version = "0.1.0"
-description = "Python project template with modern defaults: uv, ruff, pytest, pre-commit, GitHub Actions"
+description = "Python project template with modern defaults: uv, ruff, ty, pytest, pip-audit, gitleaks, zizmor, pre-commit, GitHub Actions"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = []
 
 [dependency-groups]
 dev = [
-    "pytest>=8.0.0",
-    "ruff>=0.13.0",
-    "pre-commit>=4.0.0",
+    "pytest>=9.1.1",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.16.8",
+    "ty>=0.0.82",
+    "pip-audit>=2.10.1",
+    "pre-commit>=4.6.2",
 ]
 
 [build-system]
@@ -32,10 +35,17 @@ select = [
     "I",    # isort
     "W",    # pycodestyle warnings
     "C90",  # mccabe complexity
+    "B",    # flake8-bugbear
+    "S",    # flake8-bandit (security)
+    "UP",   # pyupgrade
     "PLC0415",  # import outside toplevel
     "PLR0912",  # too many branches
     "PLR0915",  # too many statements
 ]
+
+[tool.ruff.lint.per-file-ignores]
+# Tests use assert and may hardcode test-only values; both are safe here.
+"tests/**" = ["S101"]
 
 [tool.ruff.lint.mccabe]
 max-complexity = 10
@@ -46,3 +56,17 @@ max-statements = 50
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+addopts = "--cov=src --cov-report=term-missing --cov-fail-under=100"
+
+[tool.ty.src]
+include = ["src", "tests"]
+
+[tool.ty.environment]
+# Mirror requires-python; keeps type checks aligned with the runtime target.
+python-version = "3.14"
+
+[tool.coverage.report]
+# Exclude conventionally un-testable lines from the coverage gate.
+exclude_also = [
+    'if __name__ == .__main__.:',
+]

@@ -35,8 +35,7 @@ FILES=(
     "$PROJECT_DIR/pyproject.toml"
     "$PROJECT_DIR/README.md"
     "$PROJECT_DIR/tests/test_main.py"
-    "$PROJECT_DIR/.kiro/steering/structure.md"
-    "$PROJECT_DIR/.kiro/steering/tech.md"
+    "$PROJECT_DIR/AGENTS.md"
 )
 
 for f in "${FILES[@]}"; do
