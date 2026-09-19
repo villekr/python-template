@@ -56,5 +56,6 @@ tests/                 # Tests
 .github/zizmor.yml     # zizmor (GitHub Actions audit) config
 .github/ISSUE_TEMPLATE/ # Bug report + feature request forms
 CONTRIBUTING.md        # Contributor guide
-AGENTS.md              # Instructions for AI coding agents (CLAUDE.md, GEMINI.md, .cursorrules symlink to it)
+SECURITY.md            # Vulnerability disclosure policy
+AGENTS.md              # Instructions for AI coding agents (CLAUDE.md, GEMINI.md, .cursorrules are pointer files to it)
 ```

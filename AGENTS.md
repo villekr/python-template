@@ -2,7 +2,7 @@
 
 Instructions for AI coding agents working in this repository. This is the single
 source of truth; agent-specific files (`CLAUDE.md`, `.cursorrules`, etc.) are
-symlinks to it, and Kiro loads it automatically.
+small pointer files that reference it, and Kiro loads it automatically.
 
 ## Tech & Workflow
 
@@ -24,7 +24,7 @@ Rules:
 src/python_template/   # package source (src layout — import as python_template)
 tests/                 # pytest tests, mirror source module names
 .github/workflows/     # CI (mirrors pre-commit)
-AGENTS.md               # this file — CLAUDE.md, GEMINI.md, .cursorrules, .github/copilot-instructions.md symlink to it
+AGENTS.md               # this file — CLAUDE.md, GEMINI.md, .cursorrules, .github/copilot-instructions.md are pointer files to it
 scripts/setup-once.sh   # one-time rename; deletes itself after use
 ```
 
