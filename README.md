@@ -41,6 +41,8 @@ uv run pip-audit           # Audit dependencies for known vulnerabilities
 - **pip-audit** — Dependency vulnerability auditing
 - **gitleaks** — Secret scanning
 - **zizmor** — GitHub Actions workflow security auditing
+- **CycloneDX** — SBOM generation (CI artifact, from the synced environment)
+- **OpenSSF Scorecard** — Supply-chain posture scoring (scheduled + on push to main)
 - **pre-commit** — Git hooks (format, lint, type check, secret scan, workflow audit, dependency audit, tests)
 - **GitHub Actions** — PR checks (same as pre-commit) with least-privilege permissions
 
@@ -49,7 +51,7 @@ uv run pip-audit           # Audit dependencies for known vulnerabilities
 ```
 src/python_template/   # Package source
 tests/                 # Tests
-.github/workflows/     # CI (parallel lint / type-check / test / audit / secrets / workflow jobs)
+.github/workflows/     # CI (parallel lint / type-check / test / audit / secrets / workflow / SBOM jobs) + OpenSSF Scorecard
 .github/dependabot.yml # Weekly dependency + action updates
 .github/zizmor.yml     # zizmor (GitHub Actions audit) config
 .github/ISSUE_TEMPLATE/ # Bug report + feature request forms
