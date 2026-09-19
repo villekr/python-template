@@ -130,3 +130,37 @@ jobs:
         run: uvx zizmor --format=plain .
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  sbom:
+    name: SBOM
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v10.1.0
+        with:
+          enable-cache: true
+
+      - name: Install dependencies
+        run: uv sync --group dev
+
+      - name: Generate CycloneDX SBOM
+        # cyclonedx-bom reads the synced virtual environment (the most accurate
+        # source), producing a CycloneDX 1.6 JSON SBOM. Run ephemerally via uvx
+        # so it stays out of the project's dev dependencies.
+        run: >-
+          uvx --from cyclonedx-bom cyclonedx-py environment .venv
+          --output-format JSON
+          --output-file sbom.cdx.json
+
+      - name: Upload SBOM
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom-cyclonedx
+          path: sbom.cdx.json
+          retention-days: 30
