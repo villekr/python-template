@@ -46,6 +46,32 @@ uv run pip-audit           # Audit dependencies for known vulnerabilities
 - **pre-commit** — Git hooks (format, lint, type check, secret scan, workflow audit, dependency audit, tests)
 - **GitHub Actions** — PR checks (same as pre-commit) with least-privilege permissions
 
+## Profiling & Benchmarking (opt-in)
+
+**Decision:** no performance tooling ships as a default dependency. A generic
+template can't know the target workload, so a benchmark suite or profiler choice
+would be premature and add dev-dependency weight (and CI time) with no signal on
+a "hello world" package. Adopt these per project, on demand:
+
+```bash
+# Ad-hoc sampling profiler — attach to a running process, no code changes.
+uv run --with py-spy py-spy top -- python -m python_template
+
+# CPU + memory profiler with line-level attribution (deeper investigations).
+uv run --with scalene scalene -m python_template
+
+# Deterministic per-line timing for a hot function (decorate with @profile).
+uv run --with line_profiler kernprof -lv your_script.py
+
+# Microbenchmarks in the test suite — add as a dev dependency when adopting.
+uv add --group dev pytest-benchmark
+```
+
+Guidance: reach for `py-spy` first (zero-instrumentation), `scalene` for
+CPU/memory attribution, `line_profiler` for pinpoint per-line timing, and adopt
+`pytest-benchmark` only once there are perf-sensitive paths worth guarding
+against regressions.
+
 ## Project Structure
 
 ```
