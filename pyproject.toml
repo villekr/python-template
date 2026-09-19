@@ -11,7 +11,9 @@ dev = [
     "pytest>=9.1.1",
     "pytest-cov>=7.1.0",
     "ruff>=0.16.8",
-    "ty>=0.0.82",
+    # ty is beta (0.0.x); pin an upper bound so a breaking pre-1.0 release
+    # can't silently land via `uv sync`. Bump deliberately.
+    "ty>=0.0.82,<0.1",
     "pip-audit>=2.10.1",
     "pre-commit>=4.6.2",
 ]
@@ -56,7 +58,9 @@ max-statements = 50
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "--cov=src --cov-report=term-missing --cov-fail-under=100"
+# -W error: treat warnings (incl. deprecations) as failures.
+# --strict-markers / --strict-config: fail on unknown markers or config typos.
+addopts = "--cov=src --cov-report=term-missing --cov-fail-under=100 -W error --strict-markers --strict-config"
 
 [tool.ty.src]
 include = ["src", "tests"]
