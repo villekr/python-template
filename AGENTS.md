@@ -17,6 +17,9 @@ Rules:
 - Run everything through `uv run`; never call `python`/`pip` directly.
 - Keep `uv.lock` committed and in sync with `pyproject.toml`.
 - Match `line-length = 120` and the existing ruff rule set; don't loosen rules to pass lint.
+- No profiling/benchmark tools ship as defaults. If perf work is needed, use the
+  opt-in commands in the README's "Profiling & Benchmarking" section (`py-spy`,
+  `scalene`, `line_profiler`, `pytest-benchmark`) rather than adding new deps.
 
 ## Structure
 
